@@ -1,7 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
-import logo from '../logo.svg'
 
-export const Route = createFileRoute('/result')({
+export const Route = createFileRoute('/_ResultSimulation/result')({
   component: Result,
 })
 

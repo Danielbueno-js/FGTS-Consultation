@@ -8,56 +8,64 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as ResultRouteImport } from './routes/result'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as rootRouteImport } from './pages/__root'
+import { Route as IndexRouteImport } from './pages/index'
+import { Route as ResultSimulationResultRouteImport } from './pages/_ResultSimulation/result'
+import { Route as FormSimulationSimulationRouteImport } from './pages/_FormSimulation/simulation'
 
-const ResultRoute = ResultRouteImport.update({
-  id: '/result',
-  path: '/result',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResultSimulationResultRoute = ResultSimulationResultRouteImport.update({
+  id: '/_ResultSimulation/result',
+  path: '/result',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FormSimulationSimulationRoute =
+  FormSimulationSimulationRouteImport.update({
+    id: '/_FormSimulation/simulation',
+    path: '/simulation',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/result': typeof ResultRoute
+  '/simulation': typeof FormSimulationSimulationRoute
+  '/result': typeof ResultSimulationResultRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/result': typeof ResultRoute
+  '/simulation': typeof FormSimulationSimulationRoute
+  '/result': typeof ResultSimulationResultRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/result': typeof ResultRoute
+  '/_FormSimulation/simulation': typeof FormSimulationSimulationRoute
+  '/_ResultSimulation/result': typeof ResultSimulationResultRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/result'
+  fullPaths: '/' | '/simulation' | '/result'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/result'
-  id: '__root__' | '/' | '/result'
+  to: '/' | '/simulation' | '/result'
+  id:
+    | '__root__'
+    | '/'
+    | '/_FormSimulation/simulation'
+    | '/_ResultSimulation/result'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ResultRoute: typeof ResultRoute
+  FormSimulationSimulationRoute: typeof FormSimulationSimulationRoute
+  ResultSimulationResultRoute: typeof ResultSimulationResultRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/result': {
-      id: '/result'
-      path: '/result'
-      fullPath: '/result'
-      preLoaderRoute: typeof ResultRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -65,12 +73,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_ResultSimulation/result': {
+      id: '/_ResultSimulation/result'
+      path: '/result'
+      fullPath: '/result'
+      preLoaderRoute: typeof ResultSimulationResultRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_FormSimulation/simulation': {
+      id: '/_FormSimulation/simulation'
+      path: '/simulation'
+      fullPath: '/simulation'
+      preLoaderRoute: typeof FormSimulationSimulationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ResultRoute: ResultRoute,
+  FormSimulationSimulationRoute: FormSimulationSimulationRoute,
+  ResultSimulationResultRoute: ResultSimulationResultRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
