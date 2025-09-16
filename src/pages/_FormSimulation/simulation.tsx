@@ -119,10 +119,9 @@ export function Simulation() {
               <FormItem>
                 <FormLabel>Qual seu saldo?</FormLabel>
                 <FormControl>
-                  <InputMask
+                  <Input
                     type="number"
                     placeholder="ex: R$ 5.000,00"
-                    
                     min="0"
                     {...field}
                     onChange={(e) => field.onChange(e.target.value)}
