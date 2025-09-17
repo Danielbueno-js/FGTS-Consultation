@@ -6,7 +6,6 @@ interface MyRouterContext {
   queryClient: QueryClient
 }
 
-// SVG para pontilhado horizontal claro
 const dotsSvg = encodeURIComponent(`
   <svg width="30" height="14" viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="26" cy="2" r="2" fill="#111827" fill-opacity="0.50"/>
@@ -23,9 +22,15 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         <img
           src={backGroundImageUrl}
           alt="background"
-          className="w-2/3 size-full object-top brightness-30"
+          className="w-full h-full sm:w-2/3 object-cover size-full object-top brightness-30"
           draggable={false}
         />
+         {/* <img
+          src={backGroundImageUrl}
+          alt="background"
+          className="w-full h-full object-cover object-top brightness-30"
+          draggable={false}
+        /> */}
         <div
           className="brightness-98 absolute top-0 right-0 h-full w-1/2 bg-[#002252] clip-diagonal"
           style={{
