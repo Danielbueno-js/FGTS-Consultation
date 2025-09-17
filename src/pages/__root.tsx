@@ -25,12 +25,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
           className="w-full h-full sm:w-2/3 object-cover size-full object-top brightness-30"
           draggable={false}
         />
-         {/* <img
-          src={backGroundImageUrl}
-          alt="background"
-          className="w-full h-full object-cover object-top brightness-30"
-          draggable={false}
-        /> */}
         <div
           className="brightness-98 absolute top-0 right-0 h-full w-1/2 bg-[#002252] clip-diagonal"
           style={{
