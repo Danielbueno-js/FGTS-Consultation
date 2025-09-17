@@ -8,8 +8,8 @@ Pré requisitos
 
 Para executar o Projeto primeiro 
 
-- git clone <url-do-repositorio>
-- cd fgts-consultation
+- git clone https://github.com/Danielbueno-js/FGTS-Consultation.git
+- cd FGTS-Consultation
 
 
 então baixe as dependencias
