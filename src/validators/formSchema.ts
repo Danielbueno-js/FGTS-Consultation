@@ -1,8 +1,15 @@
+
 import z from "zod";
 
 export const formSchema = z.object({
   name: z.string().min(1, "Nome é obrigatório"),
-  value: z.coerce.number().positive("Valor deve ser um número positivo"),
+  value: z
+    .string()
+    .min(1, "Saldo é obrigatório")
+    .refine((val) => {
+      const digitsOnly = val.replace(/\D/g, "");
+      return Number(digitsOnly) >= 1;
+    }, { message: "Valor mínimo é 1" }),
   birthday: z
     .string()
     .min(1, "Data de aniversário é obrigatória")
@@ -11,12 +18,17 @@ export const formSchema = z.object({
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       date.setHours(0, 0, 0, 0);
-
-      if (isNaN(date.getTime())) return false;
-      if (date.getTime() === today.getTime()) return false;
-      if (date > today) return false;
-
-      return true;
+      return !isNaN(date.getTime()) && date <= today;
     }, "A data de aniversário deve ser anterior a hoje"),
-  phone: z.number().min(1000000000, "Telefone é obrigatório"),
+  phone: z
+    .string()
+    .min(1, "Telefone é obrigatório")
+    .refine((val) => {
+
+      const digitsOnly = val.replace(/\D/g, "");
+
+      return digitsOnly.length === 13;
+    }, {
+      message: "Telefone inválido, preencha todos os dígitos",
+    })
 });
