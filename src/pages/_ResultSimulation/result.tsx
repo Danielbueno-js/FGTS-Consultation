@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import iconSvg from '@/assets/logoIcon.svg'
 import { useFormStore } from '@/store/formStore';
+import { formatMoney } from '@/utils/currencyFormatter';
 
 export const Route = createFileRoute('/_ResultSimulation/result')({
   component: Result,
@@ -54,11 +55,11 @@ function Result() {
               Você pode receber até
             </p>
             <div className='flex flex-row gap-1'>
-              <p className="text-4xl font-extrabold text-[#00908a]">
+              <p className="text-lg self-end font-extrabold text-gray-700">
                 R$ 
               </p>
               <p className="text-4xl font-extrabold text-[#00908a]">
-                {fgtsValueWithdraw}
+                {formatMoney(fgtsValueWithdraw)}
               </p>
             </div>
           </div>

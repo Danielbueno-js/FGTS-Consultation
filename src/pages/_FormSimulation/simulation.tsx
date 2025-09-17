@@ -16,10 +16,17 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import iconSvg from '@/assets/logoIcon.svg'
 import { useFormStore } from '@/store/formStore'
 import { calcularSaqueAniversario } from '@/utils/FGTSCalculator'
+import { formatMoneyInput } from '@/utils/currencyFormatter'
 
 export const Route = createFileRoute('/_FormSimulation/simulation')({
   component: Simulation,
 })
+
+const months = [
+  'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+  'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+]
+
 
 export function Simulation() {
   const navigate = useNavigate()
@@ -165,11 +172,13 @@ export function Simulation() {
                   <FormControl>
                     <Input
                       id="value"
-                      mask="R$ 00.000,00"
-                      placeholder="ex: R$ 5.000,00"
+                      placeholder="ex: 5.000,00"
                       className="h-11 border-gray-300 focus:border-blue-500 text-sm"
-                      {...field}
-                      onChange={(e) => field.onChange(e.target.value)}
+                      value={formatMoneyInput(field.value ?? "")}
+                      onChange={(e) => {
+                        const raw = e.target.value.replace(/\D/g, ""); 
+                        field.onChange(raw);
+                      }}
                     />
                   </FormControl>
                   <FormMessage className="text-xs font-bold" />
@@ -189,21 +198,12 @@ export function Simulation() {
                       value={field.value}
                     >
                       <SelectTrigger className="h-11 w-full border-gray-300 focus:border-blue-500 text-sm">
-                        <SelectValue placeholder="Selecione..." id="birthday"/>
+                        <SelectValue placeholder="Selecione..." id="birthday" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="01">Janeiro</SelectItem>
-                        <SelectItem value="02">Fevereiro</SelectItem>
-                        <SelectItem value="03">Março</SelectItem>
-                        <SelectItem value="04">Abril</SelectItem>
-                        <SelectItem value="05">Maio</SelectItem>
-                        <SelectItem value="06">Junho</SelectItem>
-                        <SelectItem value="07">Julho</SelectItem>
-                        <SelectItem value="08">Agosto</SelectItem>
-                        <SelectItem value="09">Setembro</SelectItem>
-                        <SelectItem value="10">Outubro</SelectItem>
-                        <SelectItem value="11">Novembro</SelectItem>
-                        <SelectItem value="12">Dezembro</SelectItem>
+                        {months.map((month, index) => (
+                          <SelectItem key={index} value={`${index + 1}`}>{month}</SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -212,7 +212,6 @@ export function Simulation() {
               )}
             />
           </div>
-
           <div className="flex justify-center pt-2">
             <Button
               type="submit"
